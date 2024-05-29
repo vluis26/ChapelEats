@@ -1,10 +1,20 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import './Login.css'
+import axios from 'axios'
 
 
 const Login = () => {
 
    const [action,setAction] = useState("Sign Up");
+
+   const fetchAPI = async () => {
+    const response = await axios.get("http://localhost:8080/api/users")
+    console.log(response.data.users)
+   }
+
+   useEffect(() => {
+    fetchAPI()
+   }, [])
 
  return (
 
