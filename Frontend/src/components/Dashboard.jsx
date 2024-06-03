@@ -1,10 +1,22 @@
 import React from 'react'
 // import './dashboard.css'
+import { useNavigate } from 'react-router-dom'
 
 
-const Dashboard = () => {
+const Dashboard = ({setIsLoggedIn}) => {
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    setIsLoggedIn(false)
+    navigate("/")
+  }
+
+
   return (
-    <div>Dashboard</div>
+    <div>
+      <p>Dashboard</p>
+      <button onClick={handleLogout}>Logout</button>
+    </div>
   )
 }
 
