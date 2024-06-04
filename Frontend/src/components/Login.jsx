@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../components/Login.css';
 import axios from 'axios';
 
-const Login = ({ setIsLoggedIn }) => {
+const Login = ({ setIsLoggedIn, setUserName }) => {
     const [action, setAction] = useState('Sign Up');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -19,6 +19,7 @@ const Login = ({ setIsLoggedIn }) => {
             });
             console.log(response.data);
             setIsLoggedIn(true);
+            setUserName(name);
             navigate('/dashboard');
         } catch (error) {
             console.error('Error registering user:', error);
@@ -33,6 +34,7 @@ const Login = ({ setIsLoggedIn }) => {
             });
             console.log(response.data);
             setIsLoggedIn(true);
+            setUserName(response.data.name);
             navigate('/dashboard');
         } catch (error) {
             console.error('Error logging in:', error);
@@ -46,9 +48,7 @@ const Login = ({ setIsLoggedIn }) => {
                 <div className='text'>{action}</div>
             </div>
             <div className='inputs'>
-                {action === 'Login' ? (
-                    <div></div>
-                ) : (
+                {action === 'Login' ? null : (
                     <div className='input'>
                         <input
                             type='text'

@@ -7,12 +7,13 @@ import './index.css';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [userName, setUserName] = React.useState('');
 
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
-        <Route path="/dashboard" element={isLoggedIn ? <Dashboard setIsLoggedIn={setIsLoggedIn} /> : <Navigate to="/" />} />
+        <Route path="/" element={<Login setIsLoggedIn={setIsLoggedIn} setUserName={setUserName} />} />
+        <Route path="/dashboard" element={isLoggedIn ? <Dashboard setIsLoggedIn={setIsLoggedIn} userName={userName} /> : <Navigate to="/" />} />
       </Routes>
     </Router>
   );

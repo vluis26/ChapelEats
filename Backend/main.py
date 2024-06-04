@@ -5,13 +5,11 @@ import certifi
 
 app = Flask(__name__)
 
-# MongoDB connection URI
 mongo_uri = "mongodb+srv://luisvilla122003:TCmNf457CIScy5vc@cluster5.katcvxg.mongodb.net/?retryWrites=true&w=majority"
 client = MongoClient(mongo_uri, tlsCAFile=certifi.where())
-db = client.get_database("ChapelEatsDB")  # Replace with your database name
+db = client.get_database("ChapelEatsDB")
 users_collection = db.get_collection("users")
 
-# Enable CORS for all routes and allow all origins
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route('/register', methods=['POST'])
@@ -50,7 +48,9 @@ def login():
     if not user:
         return jsonify({'message': 'Invalid credentials'}), 401
 
-    return jsonify({'message': 'Login successful'}), 200
+    # Return user's name along with the login message
+    return jsonify({'message': 'Login successful', 'name': user['name']}), 200
+
 
 if __name__ == "__main__":
     app.run(debug=True, port=8080)
