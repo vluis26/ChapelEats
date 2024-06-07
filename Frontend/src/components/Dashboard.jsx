@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'; // Ensure axios is imported
 import './Dashboard.css';
 
-const Dashboard = ({ setIsLoggedIn, userName }) => {
+const Dashboard = ({ setIsLoggedIn, userName, }) => {
   const navigate = useNavigate();
 
   const [nutritionalGoals, setNutritionalGoals] = useState('');
@@ -12,18 +13,47 @@ const Dashboard = ({ setIsLoggedIn, userName }) => {
   const [diningHall, setDiningHall] = useState('');
   const [age, setAge] = useState('');
   const [height, setHeight] = useState('');
+  const [weight, setWeight] = useState('');
+
+
+  // useEffect(() => {
+  //   const fetchPreferences = async () => {
+  //     try {
+  //       const response = await axios.post('http://localhost:8080/get-preferences', { email: userEmail });
+  //       const preferences = response.data.preferences;
+  //       setNutritionalGoals(preferences.nutritionalGoals);
+  //       setDietaryRestrictions(preferences.dietaryRestrictions);
+  //       setSex(preferences.sex);
+  //       setMealTime(preferences.mealTime);
+  //       setDiningHall(preferences.diningHall);
+  //       setAge(preferences.age);
+  //       setHeight(preferences.height);
+  //       setWeight(preferences.weight);
+  //     } catch (error) {
+  //       console.error('Error fetching preferences:', error);
+  //     }
+  //   };
+  //   fetchPreferences();
+  // }, [userEmail]);
+  
 
   const handleLogout = () => {
     setIsLoggedIn(false);
     navigate('/');
   };
 
+  const handleGenerate = async () => {
+    setIsLoggedIn(true)
+    navigate('/dashboard/meals')
+
+  };
+
   return (
     <div className='dashboard-container'>
       <div className='dashboard-user-info'>
-          <div className='dashboard-user-name'>Hello {userName || 'Guest'}!</div>
-          <button className='dashboard-logout-button' onClick={handleLogout}>Logout</button>
-        </div>
+        <div className='dashboard-user-name'>Hello {userName}!</div>
+        <button className='dashboard-logout-button' onClick={handleLogout}>Logout</button>
+      </div>
       <div className='dashboard-header'>
         <div className='dashboard-title'>
           <div className='dashboard-text'>ChapelEats</div>
@@ -81,11 +111,15 @@ const Dashboard = ({ setIsLoggedIn, userName }) => {
           <input type='number' value={age} onChange={(e) => setAge(e.target.value)} />
         </div>
         <div className='dashboard-input'>
-          <label>Height (cm)</label>
+          <label>Height (in)</label>
           <input type='number' value={height} onChange={(e) => setHeight(e.target.value)} />
         </div>
+        <div className='dashboard-input'>
+          <label>Weight</label>
+          <input type='number' value={weight} onChange={(e) => setWeight(e.target.value)} />
+        </div>
       </div>
-      <button className='dashboard-button'>Generate Meal</button>
+      <button className='dashboard-button' onClick={handleGenerate}>Generate Meal</button>
     </div>
   );
 };

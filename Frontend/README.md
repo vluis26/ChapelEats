@@ -1,8 +1,8 @@
-# React + Vite
+This is my full-stack web application to assist UNC students with personalized meal planning based on dietary needs and preferences.
+Built using Flask/Python, React.js, and MongoDB.
+To run: 
+1. cd into /frontend and run in the terminal, npm run dev, http://localhost:5173/
+2. After, in a separate terminal, cd into /backend and run, python3 main.py
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+You are able to login using demo data: email: alice@example.com, password: password123
+Once logged in you will be able to fill in the dietary needs and preferences

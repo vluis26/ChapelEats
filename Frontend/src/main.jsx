@@ -3,17 +3,20 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
+import Meals  from './components/Meals'
 import './index.css';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [userName, setUserName] = React.useState('');
+  const [userEmail, setUserEmail] = React.useState('')
 
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login setIsLoggedIn={setIsLoggedIn} setUserName={setUserName} />} />
-        <Route path="/dashboard" element={isLoggedIn ? <Dashboard setIsLoggedIn={setIsLoggedIn} userName={userName} /> : <Navigate to="/" />} />
+        <Route path="/" element={<Login setIsLoggedIn={setIsLoggedIn} setUserName={setUserName} setUserEmail={setUserEmail} />} />
+        <Route path="/dashboard" element={isLoggedIn ? <Dashboard setIsLoggedIn={setIsLoggedIn} userName={userName} userEmail={userEmail} /> : <Navigate to="/" />} />
+        <Route path="/dashboard/meals" element={isLoggedIn ? <Meals /> : <Navigate to="/" />} />
       </Routes>
     </Router>
   );
