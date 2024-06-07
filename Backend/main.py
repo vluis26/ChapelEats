@@ -4,7 +4,7 @@ from pymongo import MongoClient
 from openai import OpenAI
 import certifi
 
-client = OpenAI(api_key= "sk-proj-U3w4iOCdf6zvKLZdGbANT3BlbkFJf7oQjZ3r47YFfbCpSb2X")
+client = OpenAI(api_key= "")
 
 
 app = Flask(__name__)
