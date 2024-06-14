@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'; // Ensure axios is imported
+import axios from 'axios';
 import './Dashboard.css';
 
 const Dashboard = ({ setIsLoggedIn, userName, }) => {
@@ -14,27 +14,6 @@ const Dashboard = ({ setIsLoggedIn, userName, }) => {
   const [age, setAge] = useState('');
   const [height, setHeight] = useState('');
   const [weight, setWeight] = useState('');
-
-
-  // useEffect(() => {
-  //   const fetchPreferences = async () => {
-  //     try {
-  //       const response = await axios.post('http://localhost:8080/get-preferences', { email: userEmail });
-  //       const preferences = response.data.preferences;
-  //       setNutritionalGoals(preferences.nutritionalGoals);
-  //       setDietaryRestrictions(preferences.dietaryRestrictions);
-  //       setSex(preferences.sex);
-  //       setMealTime(preferences.mealTime);
-  //       setDiningHall(preferences.diningHall);
-  //       setAge(preferences.age);
-  //       setHeight(preferences.height);
-  //       setWeight(preferences.weight);
-  //     } catch (error) {
-  //       console.error('Error fetching preferences:', error);
-  //     }
-  //   };
-  //   fetchPreferences();
-  // }, [userEmail]);
   
 
   const handleLogout = () => {
@@ -43,10 +22,26 @@ const Dashboard = ({ setIsLoggedIn, userName, }) => {
   };
 
   const handleGenerate = async () => {
-    setIsLoggedIn(true)
-    navigate('/dashboard/meals')
-
+    try {
+      const response = await axios.post('http://localhost:8080/generate-meal', {
+        nutritionalGoals,
+        dietaryRestrictions,
+        sex,
+        mealTime,
+        diningHall,
+        age,
+        height,
+        weight,
+      });
+  
+      console.log('Generated Meal Response:', response.data);
+      navigate('/dashboard/meals', { state: { meal_description: response.data.meal_description, recipes_info: response.data.recipes_info } });
+    } catch (error) {
+      console.error('Error generating meal:', error);
+    }
   };
+  
+  
 
   return (
     <div className='dashboard-container'>

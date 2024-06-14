@@ -7,41 +7,9 @@ db.users.drop();
 
 // Insert a few documents into the users collection.
 db.users.insertMany([
-  { 'name': 'Alice', 'email': 'alice@example.com', 'password': 'password123', 
-    'preferences':{ 
-        'nutritionalGoals': 'weight_loss',
-        'dietaryRestrictions': 'vegan',
-        'sex': 'female',
-        'mealtime': 'lunch',
-        'diningHall': 'hall1',
-        'age': 21,
-        'height': 65,
-        'weight': 130
-        
-    }},
-
-  { 'name': 'Bob', 'email': 'bob@example.com', 'password': 'password456',
-  'preferences': {
-      'nutritionalGoals': 'muscle_gain',
-      'dietaryRestrictions': 'none',
-      'sex': 'male',
-      'mealTime': 'dinner',
-      'diningHall': 'hall2',
-      'age': 30,
-      'height': 70,
-      'weight': 180
-    } },
-  { 'name': 'Charlie', 'email': 'charlie@example.com', 'password': 'password789',
-  'preferences': {
-      'nutritionalGoals': 'maintenance',
-      'dietaryRestrictions': 'vegetarian',
-      'sex': 'male',
-      'mealTime': 'breakfast',
-      'diningHall': 'hall1',
-      'age': 28,
-      'height': 68,
-      'weight': 150
-    } },
+  { 'name': 'Alice', 'email': 'alice@example.com', 'password': 'password123'},
+  { 'name': 'Bob', 'email': 'bob@example.com', 'password': 'password456'},
+  { 'name': 'Charlie', 'email': 'charlie@example.com', 'password': 'password789'},
 ]);
 
 // Run a find command to view all users.

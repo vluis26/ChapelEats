@@ -1,40 +1,38 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 import { useLocation } from 'react-router-dom';
+import './Meals.css';
 
 const Meals = () => {
   const location = useLocation();
-  const userEmail = location.state?.email;
-  const [mealPlan, setMealPlan] = useState('');
-  const [loading, setLoading] = useState(true);
+  const { meal_description, recipes_info } = location.state || {};
 
-  useEffect(() => {
-    const fetchMealPlan = async () => {
-      try {
-        const response = await axios.post('http://localhost:8080/generate-meal', {
-          email: userEmail
-        });
-        setMealPlan(response.data.meal_plan);
-      } catch (error) {
-        console.error('Error fetching meal plan:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  console.log('Location State:', location.state);
 
-    if (userEmail) {
-      fetchMealPlan();
-    }
-  }, [userEmail]);
-
-  if (loading) {
-    return <div>Loading...</div>;
+  if (!meal_description) {
+    return <div>No meal description available.</div>;
   }
 
   return (
-    <div>
-      <h2>Generated Meal Plan</h2>
-      <p>{mealPlan}</p>
+    <div className='meals-container'>
+      <h1>Generated Meal Plan</h1>
+      <p>{meal_description}</p>
+      <h2>Recipe Details</h2>
+      {recipes_info && recipes_info.length > 0 ? (
+        recipes_info.map((recipe, index) => (
+          <div key={index} className='recipe'>
+            <h3>{recipe.recipe_name}</h3>
+            <p><strong>Allergens:</strong> {recipe.allergens}</p>
+            <h4>Nutritional Information</h4>
+            <ul>
+              {Object.entries(recipe.nutrition_info).map(([nutrient, amount], idx) => (
+                <li key={idx}>{nutrient}: {amount}</li>
+              ))}
+            </ul>
+          </div>
+        ))
+      ) : (
+        <p>No recipes information available.</p>
+      )}
     </div>
   );
 };
