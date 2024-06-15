@@ -40,8 +40,6 @@ const Dashboard = ({ setIsLoggedIn, userName, }) => {
       console.error('Error generating meal:', error);
     }
   };
-  
-  
 
   return (
     <div className='dashboard-container'>
@@ -72,7 +70,6 @@ const Dashboard = ({ setIsLoggedIn, userName, }) => {
             <option value="vegan">Vegan</option>
             <option value="vegetarian">Vegetarian</option>
             <option value="gluten_free">Gluten Free</option>
-            <option value="halal">Halal</option>
             <option value="none">None</option>
           </select>
         </div>
@@ -97,8 +94,7 @@ const Dashboard = ({ setIsLoggedIn, userName, }) => {
           <label>Dining Hall</label>
           <select value={diningHall} onChange={(e) => setDiningHall(e.target.value)}>
             <option value="">Select</option>
-            <option value="hall1">Lenoir Dining Hall</option>
-            <option value="hall2">Chase Dining Hall</option>
+            <option value="Chase">Chase Dining Hall</option>
           </select>
         </div>
         <div className='dashboard-input'>

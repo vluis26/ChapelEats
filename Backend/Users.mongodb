@@ -1,9 +1,11 @@
 // Select the database to use.
 use('ChapelEatsDB');
 
-// The drop() command destroys all data from a collection.
-// Make sure you run it against the correct database and collection.
+// Drop the users collection if it exists.
 db.users.drop();
+
+// Drop the recipe_ids collection if it exists.
+db.recipe_ids.drop();
 
 // Insert a few documents into the users collection.
 db.users.insertMany([
@@ -14,9 +16,6 @@ db.users.insertMany([
 
 // Run a find command to view all users.
 db.users.find({});
-
-// Run a find command to view a user by email.
-db.users.find({ email: 'alice@example.com' });
 
 // Build an aggregation to view the total number of users.
 const aggregation = [
