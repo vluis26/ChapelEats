@@ -19,6 +19,9 @@ meals_collection = db.get_collection("saved_meals")
 food_data = pd.read_csv('/Users/luisvilla/ChapelEats/backend/rams-head-dining-hall-2015-09-25.csv')
 food_data.columns = ['Meal Time', 'Food Item', 'Calories', 'Protein (g)', 'Fat (g)','Carbohydrates (g)','Organic', 'Vegetarian','Gluten Free' , 'Vegan']
 
+app.config['ENV'] = 'production'
+
+
 
 CORS(app)
 
