@@ -41,7 +41,7 @@ def register():
     user = {'name': name, 'email': email, 'password': password}
     users_collection.insert_one(user)
 
-    return jsonify({'message': 'User registered successfully'}), 201
+    return jsonify({'message': 'User registered successfully', 'name': user['name'], 'email': user['email']}), 201
 
 @app.route('/login', methods=['POST'])
 def login():

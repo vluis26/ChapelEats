@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../components/Login.css';
 import axios from 'axios';
 
-const Login = ({ setIsLoggedIn, setUserName, setUserPreferances, setUserEmail }) => {
+const Login = ({ setIsLoggedIn, setUserName, setUserEmail }) => {
     const [action, setAction] = useState('Sign Up');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -20,7 +20,6 @@ const Login = ({ setIsLoggedIn, setUserName, setUserPreferances, setUserEmail })
             console.log(response.data);
             setIsLoggedIn(true);
             setUserName(name);
-            setUserPreferances(preferances)
             setUserEmail(email)
             navigate('/dashboard');
         } catch (error) {
