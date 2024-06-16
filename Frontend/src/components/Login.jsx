@@ -30,19 +30,25 @@ const Login = ({ setIsLoggedIn, setUserName, setUserPreferances, setUserEmail })
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post('http://localhost:8080/login', {
-                email,
-                password
-            });
+          const response = await axios.post('http://localhost:8080/login', {
+            email,
+            password,
+          });
+    
+          if (response.status === 200) {
             console.log(response.data);
             setIsLoggedIn(true);
             setUserName(response.data.name);
-            setUserEmail(email)
+            setUserEmail(response.data.email); // Store user email
             navigate('/dashboard');
+          } else {
+            console.error('Failed to login');
+          }
         } catch (error) {
-            console.error('Error logging in:', error);
+          console.error('Error logging in:', error);
         }
-    };
+      };
+    
 
     return (
         <div className='container'>

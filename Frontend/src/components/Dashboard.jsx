@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Dashboard.css';
 
-const Dashboard = ({ setIsLoggedIn, userName, }) => {
+const Dashboard = ({ setIsLoggedIn, userName, userEmail}) => {
   const navigate = useNavigate();
 
   const [nutritionalGoals, setNutritionalGoals] = useState('');
@@ -35,10 +35,14 @@ const Dashboard = ({ setIsLoggedIn, userName, }) => {
       });
   
       console.log('Generated Meal Response:', response.data);
-      navigate('/dashboard/meals', { state: { meal_description: response.data.meal_description, recipes_info: response.data.recipes_info } });
+      navigate('/dashboard/meals', { state: { meal_description: response.data.meal_description, nutritional_info: response.data.nutritional_info, email: userEmail } });
     } catch (error) {
       console.error('Error generating meal:', error);
     }
+  };
+
+  const handleViewSavedMeals = () => {
+    navigate('/dashboard/meals/saved-meals', { state: { email: userEmail } });
   };
 
   return (
@@ -111,6 +115,7 @@ const Dashboard = ({ setIsLoggedIn, userName, }) => {
         </div>
       </div>
       <button className='dashboard-button' onClick={handleGenerate}>Generate Meal</button>
+      <button className='dashboard-button' onClick={handleViewSavedMeals}>View Saved Meals</button>
     </div>
   );
 };

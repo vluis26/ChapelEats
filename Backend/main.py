@@ -5,7 +5,6 @@ from openai import OpenAI
 import certifi
 import pandas as pd
 import json
-import requests
 
 client_AI = OpenAI()
 
@@ -15,12 +14,13 @@ mongo_uri = "mongodb+srv://luisvilla122003:TCmNf457CIScy5vc@cluster5.katcvxg.mon
 client = MongoClient(mongo_uri, tlsCAFile=certifi.where())
 db = client.get_database("ChapelEatsDB")
 users_collection = db.get_collection("users")
+meals_collection = db.get_collection("saved_meals")
 
 food_data = pd.read_csv('/Users/luisvilla/ChapelEats/backend/rams-head-dining-hall-2015-09-25.csv')
 food_data.columns = ['Meal Time', 'Food Item', 'Calories', 'Protein (g)', 'Fat (g)','Carbohydrates (g)','Organic', 'Vegetarian','Gluten Free' , 'Vegan']
 
 
-CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app)
 
 @app.route('/register', methods=['POST'])
 def register():
@@ -134,6 +134,48 @@ def generate_meal():
         'meal_description': meal_description,
         'nutritional_info': nutritional_info
     }), 200
+
+
+@app.route('/save-meal', methods=['POST'])
+def save_meal():
+    data = request.json
+    print("Received data:", data)  # Log the received data
+
+    email = data.get('email')
+    meal_description = data.get('meal_description')
+    nutritional_info = data.get('nutritional_info', {})  # Provide a default empty dictionary
+
+    print("Email:", email)
+    print("Meal Description:", meal_description)
+    print("Nutritional Info:", nutritional_info)
+
+    if not email or not meal_description or not nutritional_info:
+        return jsonify({'message': 'Missing required fields'}), 400
+
+    meal = {
+        'email': email,
+        'meal_description': meal_description,
+        'nutritional_info': nutritional_info
+    }
+
+    try:
+        meals_collection.insert_one(meal)
+        return jsonify({'message': 'Meal saved successfully'}), 201
+    except Exception as e:
+        return jsonify({'message': 'Failed to save meal', 'error': str(e)}), 500
+
+
+@app.route('/get-saved-meals', methods=['GET'])
+def get_saved_meals():
+    email = request.args.get('email')
+    print(email)
+    if not email:
+        return jsonify({'message': 'Missing required fields'}), 400
+
+    saved_meals = list(meals_collection.find({'email': email}, {'_id': 0}))
+
+    return jsonify({'savedMeals': saved_meals}), 200
+
 
 
 if __name__ == "__main__":

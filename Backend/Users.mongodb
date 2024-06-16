@@ -4,8 +4,8 @@ use('ChapelEatsDB');
 // Drop the users collection if it exists.
 db.users.drop();
 
-// Drop the recipe_ids collection if it exists.
-db.recipe_ids.drop();
+// Drop the saved_meals collection if it exists.
+db.saved_meals.drop();
 
 // Insert a few documents into the users collection.
 db.users.insertMany([
@@ -14,13 +14,31 @@ db.users.insertMany([
   { 'name': 'Charlie', 'email': 'charlie@example.com', 'password': 'password789'},
 ]);
 
+// Insert a few documents into the saved_meals collection.
+db.saved_meals.insertMany([
+  { 'email': 'alice@example.com', 'meal_description': 'Black Bean Burger and Sweet Potato Fries', 'nutritional_info': { 'Total Calories': 453.94, 'Total Protein (g)': 16.3, 'Total Fat (g)': 72.94, 'Total Carbohydrates (g)': 13.76 }},
+  { 'email': 'bob@example.com', 'meal_description': 'Hummus and Mixed Fruit Salad', 'nutritional_info': { 'Total Calories': 128.61, 'Total Protein (g)': 3.82, 'Total Fat (g)': 10.45, 'Total Carbohydrates (g)': 8.71 }},
+  { 'email': 'charlie@example.com', 'meal_description': 'Steamed Yellow Squash and 100% Orange Juice', 'nutritional_info': { 'Total Calories': 138, 'Total Protein (g)': 1.36, 'Total Fat (g)': 34.77, 'Total Carbohydrates (g)': 0.2 }},
+]);
+
 // Run a find command to view all users.
 db.users.find({});
 
+// Run a find command to view all saved meals.
+db.saved_meals.find({});
+
 // Build an aggregation to view the total number of users.
-const aggregation = [
+const userAggregation = [
   { $group: { _id: null, totalUsers: { $sum: 1 } } }
 ];
 
 // Run the aggregation and open a cursor to the results.
-db.users.aggregate(aggregation).toArray();
+db.users.aggregate(userAggregation).toArray();
+
+// Build an aggregation to view the total number of saved meals per user.
+const mealsAggregation = [
+  { $group: { _id: "$email", totalMeals: { $sum: 1 } } }
+];
+
+// Run the aggregation and open a cursor to the results.
+db.saved_meals.aggregate(mealsAggregation).toArray();
