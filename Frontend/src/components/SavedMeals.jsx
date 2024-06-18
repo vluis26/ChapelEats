@@ -33,7 +33,7 @@ const SavedMeals = ({ userEmail }) => {
           </div>
         ))
       ) : (
-        <p>No saved meals yet.</p>
+        <p>No saved meals.</p>
       )}
     </div>
   );
