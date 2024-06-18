@@ -38,7 +38,7 @@ food_data.columns = ['Meal Time', 'Food Item', 'Calories', 'Protein (g)', 'Fat (
 app.config['ENV'] = 'production'
 app.config['DEBUG'] = os.getenv('FLASK_DEBUG', False)
 
-CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
+CORS(app, resources={r"/*": {"origins": "https://main--chapeleats.netlify.app"}})
 
 @app.route('/')
 def index():
