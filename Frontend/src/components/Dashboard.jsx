@@ -23,7 +23,7 @@ const Dashboard = ({ setIsLoggedIn, userName, userEmail}) => {
 
   const handleGenerate = async () => {
     try {
-      const response = await axios.post('http://localhost:8080/generate-meal', {
+      const response = await axios.post('https://chapeleats-production.up.railway.app/generate-meal', {
         nutritionalGoals,
         dietaryRestrictions,
         sex,

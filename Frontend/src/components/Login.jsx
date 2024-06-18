@@ -12,7 +12,7 @@ const Login = ({ setIsLoggedIn, setUserName, setUserEmail }) => {
 
     const handleRegister = async () => {
         try {
-            const response = await axios.post('http://localhost:8080/register', {
+            const response = await axios.post('https://chapeleats-production.up.railway.app/register', {
                 name,
                 email,
                 password
@@ -29,7 +29,7 @@ const Login = ({ setIsLoggedIn, setUserName, setUserEmail }) => {
 
     const handleLogin = async () => {
         try {
-          const response = await axios.post('http://localhost:8080/login', {
+          const response = await axios.post('https://chapeleats-production.up.railway.app/login', {
             email,
             password,
           });
