@@ -13,30 +13,30 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-
-
-dotenv_path = os.path.join(os.path.dirname(__file__), '..', '.env')
+# Load environment variables from .env file
+dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
 load_dotenv(dotenv_path)
 
+# Initialize OpenAI client
 client_AI = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 app = Flask(__name__)
 load_dotenv()
 
 
-app.config['DEBUG'] = os.environ.get('FLASK_DEBUG')
 
-mongo_uri = os.environ.get('MONGO_URI')
+mongo_uri = os.getenv('MONGO_URI')
 client = MongoClient(mongo_uri, tlsCAFile=certifi.where())
 db = client.get_database("ChapelEatsDB")
 users_collection = db.get_collection("users")
 meals_collection = db.get_collection("saved_meals")
 
-csv_file_path = os.path.join(os.path.dirname(__file__), '../rams-head-dining-hall.csv')
+csv_file_path = os.path.join(os.path.dirname(__file__), 'rams-head-dining-hall.csv')
 food_data = pd.read_csv(csv_file_path)
 food_data.columns = ['Meal Time', 'Food Item', 'Calories', 'Protein (g)', 'Fat (g)','Carbohydrates (g)','Organic', 'Vegetarian','Gluten Free' , 'Vegan']
 
 app.config['ENV'] = 'production'
+app.config['DEBUG'] = os.getenv('FLASK_DEBUG', False)
 
 CORS(app)
 
