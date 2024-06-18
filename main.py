@@ -72,7 +72,7 @@ def login():
     if not email or not password:
         return jsonify({'message': 'Email and password are required'}), 400
 
-    user = users_collection.find({"email": email, "password": password})
+    user = users_collection.find_one({"email": email, "password": password})
     if not user:
         return jsonify({'message': 'Invalid credentials'}), 401
 
