@@ -7,6 +7,12 @@ import pandas as pd
 import json
 from dotenv import load_dotenv
 import os
+import logging
+
+# Setup logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 
 
 dotenv_path = os.path.join(os.path.dirname(__file__), '..', '.env')
