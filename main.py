@@ -55,7 +55,7 @@ def register():
     if not name or not email or not password:
         return jsonify({'message': 'Missing required fields'}), 400
 
-    if users_collection.find({"email": email}):
+    if users_collection.find_one({"email": email}):
         return jsonify({'message': 'User already exists'}), 400
 
     user = {'name': name, 'email': email, 'password': password}
@@ -196,8 +196,11 @@ def get_saved_meals():
     if not email:
         return jsonify({'message': 'Missing required fields'}), 400
 
-    saved_meals = list(meals_collection.find_one({'email': email}, {'_id': 0}))
+    saved_meals_cursor = meals_collection.find({'email': email}, {'_id': 0})
 
+    # Convert cursor to list of dictionaries
+    saved_meals = list(saved_meals_cursor)
+    
     return jsonify({'savedMeals': saved_meals}), 200
 
 
