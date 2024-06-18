@@ -63,20 +63,34 @@ def register():
 
     return jsonify({'message': 'User registered successfully', 'name': user['name'], 'email': user['email']}), 201
 
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['POST', 'GET'])
 def login():
-    data = request.json
-    email = data.get('email')
-    password = data.get('password')
+    if request.method == 'POST':
+        data = request.json
+        email = data.get('email')
+        password = data.get('password')
 
-    if not email or not password:
-        return jsonify({'message': 'Missing required fields'}), 400
+        if not email or not password:
+            return jsonify({'message': 'Missing required fields'}), 400
 
-    user = users_collection.find_one({"email": email, "password": password})
-    if not user:
-        return jsonify({'message': 'Invalid credentials'}), 401
+        user = users_collection.find_one({"email": email, "password": password})
+        if not user:
+            return jsonify({'message': 'Invalid credentials'}), 401
 
-    return jsonify({'message': 'Login successful', 'name': user['name'], 'email': user['email']}), 200
+        return jsonify({'message': 'Login successful', 'name': user['name'], 'email': user['email']}), 200
+    
+    elif request.method == 'GET':
+        # Assuming you want to get user info using email query parameter
+        email = request.args.get('email')
+        if not email:
+            return jsonify({'message': 'Email query parameter is required'}), 400
+        
+        user = users_collection.find_one({"email": email})
+        if not user:
+            return jsonify({'message': 'User not found'}), 404
+
+        return jsonify({'name': user['name'], 'email': user['email']}), 200
+
 
 
 def filter_foods_by_preferences(preferences):
@@ -202,5 +216,4 @@ def get_saved_meals():
 
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", port=5000)
