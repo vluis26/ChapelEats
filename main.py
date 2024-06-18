@@ -38,7 +38,7 @@ food_data.columns = ['Meal Time', 'Food Item', 'Calories', 'Protein (g)', 'Fat (
 app.config['ENV'] = 'production'
 app.config['DEBUG'] = os.getenv('FLASK_DEBUG', False)
 
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
 
 @app.route('/')
 def index():
@@ -63,33 +63,20 @@ def register():
 
     return jsonify({'message': 'User registered successfully', 'name': user['name'], 'email': user['email']}), 201
 
-@app.route('/login', methods=['POST', 'GET'])
+@app.route('/login', methods=['POST'])
 def login():
-    if request.method == 'POST':
-        data = request.json
-        email = data.get('email')
-        password = data.get('password')
+    data = request.json
+    email = data.get('email')
+    password = data.get('password')
 
-        if not email or not password:
-            return jsonify({'message': 'Missing required fields'}), 400
+    if not email or not password:
+        return jsonify({'message': 'Email and password are required'}), 400
 
-        user = users_collection.find_one({"email": email, "password": password})
-        if not user:
-            return jsonify({'message': 'Invalid credentials'}), 401
+    user = users_collection.find_one({"email": email, "password": password})
+    if not user:
+        return jsonify({'message': 'Invalid credentials'}), 401
 
-        return jsonify({'message': 'Login successful', 'name': user['name'], 'email': user['email']}), 200
-    
-    elif request.method == 'GET':
-        # Assuming you want to get user info using email query parameter
-        email = request.args.get('email')
-        if not email:
-            return jsonify({'message': 'Email query parameter is required'}), 400
-        
-        user = users_collection.find_one({"email": email})
-        if not user:
-            return jsonify({'message': 'User not found'}), 404
-
-        return jsonify({'name': user['name'], 'email': user['email']}), 200
+    return jsonify({'message': 'Login successful', 'name': user['name'], 'email': user['email']}), 200
 
 
 

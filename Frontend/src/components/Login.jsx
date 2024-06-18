@@ -12,7 +12,7 @@ const Login = ({ setIsLoggedIn, setUserName, setUserEmail }) => {
 
     const handleRegister = async () => {
         try {
-            const response = await axios.post('https://chapeleats.onrender.com/register', {
+            const response = await axios.post('https://chapeleats-production.up.railway.app/register', {
                 name,
                 email,
                 password
@@ -29,24 +29,24 @@ const Login = ({ setIsLoggedIn, setUserName, setUserEmail }) => {
 
     const handleLogin = async () => {
         try {
-          const response = await axios.post('https://chapeleats.onrender.com/login', {
-            email,
-            password,
-          });
-    
-          if (response.status === 200) {
-            console.log(response.data);
-            setIsLoggedIn(true);
-            setUserName(response.data.name);
-            setUserEmail(response.data.email); // Store user email
-            navigate('/dashboard');
-          } else {
-            console.error('Failed to login');
-          }
+            const response = await axios.post('https://chapeleats-production.up.railway.app/login', {
+                email,
+                password,
+            });
+
+            if (response.status === 200) {
+                console.log(response.data);
+                setIsLoggedIn(true);
+                setUserName(response.data.name);
+                setUserEmail(response.data.email); // Store user email
+                navigate('/dashboard');
+            } else {
+                console.error('Failed to login');
+            }
         } catch (error) {
-          console.error('Error logging in:', error);
+            console.error('Error logging in:', error);
         }
-      };
+    };
     
 
     return (
