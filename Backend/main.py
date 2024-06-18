@@ -5,23 +5,32 @@ from openai import OpenAI
 import certifi
 import pandas as pd
 import json
+from dotenv import load_dotenv
+import os
 
-client_AI = OpenAI()
+
+dotenv_path = os.path.join(os.path.dirname(__file__), '..', '.env')
+load_dotenv(dotenv_path)
+
+client_AI = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 app = Flask(__name__)
+load_dotenv()
 
-mongo_uri = "mongodb+srv://luisvilla122003:TCmNf457CIScy5vc@cluster5.katcvxg.mongodb.net/?retryWrites=true&w=majority"
+
+app.config['DEBUG'] = os.environ.get('FLASK_DEBUG')
+
+mongo_uri = os.environ.get('MONGO_URI')
 client = MongoClient(mongo_uri, tlsCAFile=certifi.where())
 db = client.get_database("ChapelEatsDB")
 users_collection = db.get_collection("users")
 meals_collection = db.get_collection("saved_meals")
 
-food_data = pd.read_csv('/Users/luisvilla/ChapelEats/backend/rams-head-dining-hall-2015-09-25.csv')
+csv_file_path = os.path.join(os.path.dirname(__file__), '../rams-head-dining-hall.csv')
+food_data = pd.read_csv(csv_file_path)
 food_data.columns = ['Meal Time', 'Food Item', 'Calories', 'Protein (g)', 'Fat (g)','Carbohydrates (g)','Organic', 'Vegetarian','Gluten Free' , 'Vegan']
 
 app.config['ENV'] = 'production'
-
-
 
 CORS(app)
 
@@ -182,4 +191,5 @@ def get_saved_meals():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=8080)
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host="0.0.0.0", port=port)
