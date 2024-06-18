@@ -5,8 +5,8 @@ COPY . /app
 
 # Install Python dependencies
 RUN pip install --no-cache-dir --upgrade pip
-RUN pip install --no-cache-dir -r /app/requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 WORKDIR /app/backend
 
-CMD ["gunicorn", "-b", "0.0.0.0:8080", "backend.main:app"]
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "main:app"]
