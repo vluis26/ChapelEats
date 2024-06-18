@@ -7,7 +7,7 @@
         "env": {
           "PYTHONUNBUFFERED": "1"
         },
-        "command": "gunicorn -b 0.0.0.0:$PORT backend.main:app"
+        "command": "gunicorn -b 0.0.0.0:$PORT main:app"
       }
     }
   }
