@@ -8,7 +8,7 @@ const SavedMeals = ({ userEmail }) => {
     const fetchSavedMeals = async () => {
       try {
         // Include email parameter in the URL
-        const response = await fetch(`https://chapeleats-production.up.railway.app/get-saved-meals?email=${userEmail}`);
+        const response = await fetch(`https://chapeleats.onrender.com/get-saved-meals?email=${userEmail}`);
         if (response.ok) {
           const data = await response.json();
           setSavedMeals(data.savedMeals);

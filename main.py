@@ -196,7 +196,7 @@ def get_saved_meals():
     if not email:
         return jsonify({'message': 'Missing required fields'}), 400
 
-    saved_meals = list(meals_collection.find({'email': email}, {'_id': 0}))
+    saved_meals = list(meals_collection.find_one({'email': email}, {'_id': 0}))
 
     return jsonify({'savedMeals': saved_meals}), 200
 
