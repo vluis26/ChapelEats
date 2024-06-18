@@ -40,6 +40,11 @@ app.config['ENV'] = 'production'
 
 CORS(app)
 
+@app.route('/')
+def index():
+    return 'Hello, World!'
+
+
 @app.route('/register', methods=['POST'])
 def register():
     data = request.json
