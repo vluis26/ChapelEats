@@ -55,7 +55,7 @@ def register():
     if not name or not email or not password:
         return jsonify({'message': 'Missing required fields'}), 400
 
-    if users_collection.find_one({"email": email}):
+    if users_collection.find({"email": email}):
         return jsonify({'message': 'User already exists'}), 400
 
     user = {'name': name, 'email': email, 'password': password}
@@ -72,7 +72,7 @@ def login():
     if not email or not password:
         return jsonify({'message': 'Email and password are required'}), 400
 
-    user = users_collection.find_one({"email": email, "password": password})
+    user = users_collection.find({"email": email, "password": password})
     if not user:
         return jsonify({'message': 'Invalid credentials'}), 401
 
