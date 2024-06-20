@@ -20,7 +20,7 @@ const Meals = ({userEmail}) => {
     };
 
     try {
-      const response = await axios.post('https://chapeleats.onrender.com/save-meal', mealData);
+      const response = await axios.post('https://chapeleats-production.up.railway.app//save-meal', mealData);
       if (response.status === 201) {
         navigate('/dashboard/meals/saved-meals', {state: {email:userEmail}});
       } else {
