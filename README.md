@@ -1,4 +1,4 @@
-This is my full-stack web application to assist UNC students with personalized meal planning based on dietary needs and preferences.
+This is my full-stack web application to assist UNC students with personalized meal planning based on dietary needs and preferences, using OpenAI API, my web app is able to generate meals based of the user's preferences.
 Built using Vite + React for my frontend, Flask for my backend, and MongoDB for my database.
 
 Users can register using their name, email, and password, to login users need their email and password. After passing authentication, it would lead them to their dashboard where they would be able to add their preferances such as nutritional goals, meal time, sex, age, etc.
