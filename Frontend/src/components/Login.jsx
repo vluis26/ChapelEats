@@ -98,9 +98,6 @@ const Login = ({ setIsLoggedIn, setUserName, setUserEmail }) => {
                 >
                     Login
                 </div>
-                <button onClick={action === 'Login' ? handleLogin : handleRegister}>
-                    {action === 'Login' ? 'Login' : 'Register'}
-                </button>
             </div>
         </div>
     );
