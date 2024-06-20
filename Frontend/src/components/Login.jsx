@@ -86,13 +86,15 @@ const Login = ({ setIsLoggedIn, setUserName, setUserEmail }) => {
             <div className='submit-container'>
                 <div
                     className={action === 'Login' ? 'submit gray' : 'submit'}
-                    onClick={() => setAction('Sign Up')}
+                    onClick={() => {setAction('Sign Up')
+                    handleRegister();}}
                 >
                     Sign Up
                 </div>
                 <div
                     className={action === 'Sign Up' ? 'submit gray' : 'submit'}
-                    onClick={() => setAction('Login')}
+                    onClick={() => {setAction('Login')
+                    handleLogin()}}
                 >
                     Login
                 </div>
