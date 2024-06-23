@@ -11,3 +11,6 @@ Here the user can see the meal the AI created using their preferences. It displa
 
 The user is able to view all of the meals that they saved after the meal was generated
 <img width="688" alt="Screenshot 2024-06-16 at 3 21 17 AM" src="https://github.com/vluis26/ChapelEats/assets/111467809/0858b843-f039-4d21-bd47-0097c2eb8950">
+
+
+Deployed Frontend with Netlify and Backend with Railway
